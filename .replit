@@ -1,2 +1,2 @@
 language = "cpp"
-run = "mkdir -p build && cd build && cmake .. && make run"
+run = "mkdir -p build && cd build && cmake -DBoost_INCLUDE_DIR=/usr/include .. && make run"
