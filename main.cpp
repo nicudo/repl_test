@@ -59,6 +59,7 @@ int main()
     std::tuple myTuple(25, "Hello", 9.31f, 'c');
     std::cout << myTuple << '\n';
 
+    // Tuple hash test
     std::unordered_map<std::tuple<float, int>, std::string> mmap;
     mmap[std::make_tuple(1.2f, 5)] = "t1";
     mmap[std::make_tuple(1.2f, 5)] = "t2";
