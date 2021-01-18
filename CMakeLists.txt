@@ -7,8 +7,11 @@ project(test)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
 # add the executable
 add_executable(main.out main.cpp)
+
 
 add_custom_target(run
     COMMAND echo "Will run main!\\n--------------"
