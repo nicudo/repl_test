@@ -3,6 +3,9 @@
 #include <tuple>
 #include <ostream>
 
+/***************************************************************************************
+*    Original Source: Example at https://en.cppreference.com/w/cpp/utility/apply
+***************************************************************************************/
 template<typename... Ts>
 std::ostream& operator<<(std::ostream& os, std::tuple<Ts...> const& theTuple)
 {
@@ -19,6 +22,11 @@ std::ostream& operator<<(std::ostream& os, std::tuple<Ts...> const& theTuple)
     return os;
 }
 
+/***************************************************************************************
+*    Author: Nicolae Tudor
+*    Date: 2020
+*    Availability: https://github.com/nicudo
+***************************************************************************************/
 template<typename... Ts>
 struct std::hash<std::tuple<Ts...>>
 {
