@@ -29,12 +29,19 @@ int main()
 
     // Tuple hash test
     std::unordered_map<std::tuple<float, int>, std::string> mmap;
-    mmap[std::make_tuple(1.2f, 5)] = "t1";
-    mmap[std::make_tuple(1.2f, 5)] = "t2";
-    mmap[std::make_tuple(1.1f, 5)] = "t3";
-    mmap[std::make_tuple(1.2f, 4)] = "t4";
+    mmap[{1.2f, 5}] = "t1";
+    mmap[{1.2f, 5}] = "t2";
+    mmap[{1.1f, 5}] = "t3";
+    mmap[{1.2f, 4}] = "t4";
 
     for (auto&& [k,v] : mmap)
         std::cout << k << ": " << v << "\n";
 
+    if (auto&&[it, res] = mmap.try_emplace({1.1f, 1}, "t5"); !res)
+        std::cout << "Error 1" << std::endl;
+    if (auto&&[it, res] = mmap.try_emplace({1.1f, 5}, "t6"); res)
+        std::cout << "Error 2" << std::endl;
+
+    for (auto&& [k,v] : mmap)
+        std::cout << k << ":1: " << v << "\n";
 }
