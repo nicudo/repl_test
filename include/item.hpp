@@ -6,11 +6,11 @@ namespace nicudo
 {
     template<typename Key, typename Args> class Item;
 }
-template<typename Key, typename Args> std::ostream& operator<<(std::ostream&, nicudo::Item<Key, Args> const&);
+template<typename Key, typename Args> std::ostream& operator<<(std::ostream&, const nicudo::Item<Key, Args>&);
 template<typename Key, typename Args>
 struct std::hash<nicudo::Item<Key, Args>>
 {
-    size_t operator()(nicudo::Item<Key, Args> const& item) const;
+    size_t operator()(const nicudo::Item<Key, Args>& item) const;
 };
 
 namespace nicudo
@@ -21,10 +21,10 @@ namespace nicudo
     {
     public:
         Item(Key key)
-        : key_(key)
+        : key_{key}
         {}
         Item(Key key, Args args)
-        : key_(key), args_(args)
+        : key_{key}, args_{args}
         {}
         Item() = delete;
 
@@ -43,13 +43,13 @@ namespace nicudo
 }
 
 template<typename Key, typename Args>
-std::ostream& operator<<(std::ostream& os, nicudo::Item<Key, Args> const& item)
+std::ostream& operator<<(std::ostream& os, const nicudo::Item<Key, Args> & item)
 {
     os << '[' << item.key_ << ": " << item.args_ << ']';
 }
 
 template<typename Key, typename Args>
-size_t std::hash<nicudo::Item<Key, Args>>::operator()(nicudo::Item<Key, Args> const& item) const
+size_t std::hash<nicudo::Item<Key, Args>>::operator()(const nicudo::Item<Key, Args>& item) const
 {
     return std::hash<Key>{}(item.key_);
 }
