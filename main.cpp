@@ -73,4 +73,10 @@ int main()
         std::cout << "ok: " << *it.first << '\n';
     if (auto it = us.emplace(i2); !it.second)
         std::cout << "ok: " << *it.first << '\n';
+    auto&& [a_int, a_char, a_string] = i2.Attributes();
+    std::cout << "int=" << a_int
+        << " char=" << a_char
+        << " string=" << a_string << '\n';
+    
+    //a_int = 3;
 }

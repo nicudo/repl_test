@@ -1,5 +1,7 @@
 #pragma once
 #include <tuple_utils.hpp>
+#include <utility>
+#include <type_traits>
 
 // Pre-declare template friends (see https://isocpp.org/wiki/faq/templates#template-friends)
 namespace nicudo
@@ -15,7 +17,6 @@ struct std::hash<nicudo::Item<Key, Args>>
 
 namespace nicudo
 {
-
     template<typename Key, typename Args>
     class Item
     {
@@ -27,6 +28,12 @@ namespace nicudo
         : key_{std::forward<Key>(key)}, args_{std::forward<Args>(args)}
         {}
         Item() = delete;
+
+        auto Attributes()
+        {
+            if constexpr (is_tuple<Key>::value && is_tuple<Args>::value)
+                return std::tuple_cat(key_, args_);
+        }
 
     private:
         const Key key_;
