@@ -26,15 +26,19 @@ namespace nicudo
         Item(Key key, Args args)
         : key_(key), args_(args)
         {}
-
         Item() = delete;
 
     private:
-        Key key_;
+        const Key key_;
         Args args_;
 
-        friend std::ostream& operator<< <>(std::ostream&, Item<Key, Args> const&);
+        friend std::ostream& operator<< <>(std::ostream&, const Item<Key, Args>&);
         friend struct std::hash<Item<Key, Args>>;
+
+        friend bool operator==(const Item<Key, Args>& lhs, const Item<Key, Args>& rhs)
+        {
+            return lhs.key_ == rhs.key_;
+        }
     };
 }
 
@@ -47,5 +51,5 @@ std::ostream& operator<<(std::ostream& os, nicudo::Item<Key, Args> const& item)
 template<typename Key, typename Args>
 size_t std::hash<nicudo::Item<Key, Args>>::operator()(nicudo::Item<Key, Args> const& item) const
 {
-    return std::hash(item.key_);
+    return std::hash<Key>{}(item.key_);
 }

@@ -16,6 +16,10 @@ auto add_lambda = [](auto first, auto second) { return first + second; };
 
 int main()
 {
+    std::cout
+        << "\nstd::apply (cppreference) tests"
+        << "\n-------------------------------\n";
+
     // OK
     std::cout << std::apply(add, std::pair(1, 2)) << '\n';
  
@@ -29,6 +33,10 @@ int main()
     std::tuple myTuple(25, "Hello", 9.31f, 'c');
     std::cout << myTuple << '\n';
 
+    std::cout
+        << "\ntuple hash tests"
+        << "\n----------------\n";
+
     // Tuple hash test
     std::unordered_map<std::tuple<float, int>, std::string> mmap;
     mmap[{1.2f, 5}] = "t1";
@@ -37,21 +45,32 @@ int main()
     mmap[{1.2f, 4}] = "t4";
 
     for (auto&& [k,v] : mmap)
-        std::cout << k << ": " << v << "\n";
+        std::cout << k << ": " << v << '\n';
 
     if (auto&&[it, res] = mmap.try_emplace({1.1f, 1}, "t5"); !res)
-        std::cout << "Error 1" << std::endl;
+        std::cout << "Error 1" << '\n';
     if (auto&&[it, res] = mmap.try_emplace({1.1f, 5}, "t6"); res)
-        std::cout << "Error 2" << std::endl;
+        std::cout << "Error 2" << '\n';
 
     for (auto&& [k,v] : mmap)
-        std::cout << k << ":1: " << v << "\n";
+        std::cout << k << ":1: " << v << '\n';
 
-    nicudo::Item i1(std::make_tuple(1, 'a'), std::make_tuple(std::string("test")));
-    std::cout << i1 << std::endl;
+    // Item tests
+    std::cout
+        << "\nItem tests"
+        << "\n----------\n";
 
-    nicudo::Item i2(std::make_tuple(1, 'a'), std::make_tuple(std::string("test2")));
-    std::cout << i2 << std::endl;
+    using FItem = nicudo::Item<std::tuple<int, char>, std::tuple<std::string>>;
+    FItem
+        i1 = {std::make_tuple(1, 'a'), std::make_tuple(std::string("test"))},
+        i2 = {std::make_tuple(1, 'a'), std::make_tuple(std::string("test2"))};
+    std::cout
+        << i1 << '\n'
+        << i2 << '\n';
 
-    //std::unordered_set us({i1, i2});
+    std::unordered_set<FItem> us;
+    if (auto it = us.emplace(i1); it.second)
+        std::cout << "ok: " << *it.first << '\n';
+    if (auto it = us.emplace(i2); !it.second)
+        std::cout << "ok: " << *it.first << '\n';
 }
