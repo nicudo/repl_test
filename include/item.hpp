@@ -20,11 +20,11 @@ namespace nicudo
     class Item
     {
     public:
-        Item(Key key)
-        : key_{key}
+        Item(Key&& key)
+        : key_{std::forward<Key>(key)}
         {}
-        Item(Key key, Args args)
-        : key_{key}, args_{args}
+        Item(Key&& key, Args&& args)
+        : key_{std::forward<Key>(key)}, args_{std::forward<Args>(args)}
         {}
         Item() = delete;
 
