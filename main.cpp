@@ -1,5 +1,7 @@
+#include <item.hpp>
 #include <tuple_utils.hpp>
 #include <unordered_map>
+#include <unordered_set>
 #include <string>
 #include <iostream>
 #include <utility>
@@ -44,4 +46,12 @@ int main()
 
     for (auto&& [k,v] : mmap)
         std::cout << k << ":1: " << v << "\n";
+
+    nicudo::Item i1(std::make_tuple(1, 'a'), std::make_tuple(std::string("test")));
+    std::cout << i1 << std::endl;
+
+    nicudo::Item i2(std::make_tuple(1, 'a'), std::make_tuple(std::string("test2")));
+    std::cout << i2 << std::endl;
+
+    //std::unordered_set us({i1, i2});
 }
