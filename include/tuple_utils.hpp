@@ -47,3 +47,7 @@ struct std::hash<std::tuple<Ts...>>
 ***************************************************************************************/
 template <typename> struct is_tuple: std::false_type {};
 template <typename ...T> struct is_tuple<std::tuple<T...>>: std::true_type {};
+
+template<typename ...T, size_t... I>
+auto tuple_ref(std::tuple<T...>& t ,  std::index_sequence<I...>)
+{ return std::tie(std::get<I>(t)...) ;}
