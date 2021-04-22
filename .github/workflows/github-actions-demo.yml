@@ -18,4 +18,4 @@ jobs:
       - run: |
           apt list --installed
       - run: |
-          find / -name optional.hpp
+          ls /usr /usr/local
