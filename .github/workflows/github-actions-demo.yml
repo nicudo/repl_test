@@ -17,3 +17,5 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: |
           apt list --installed
+      - run: |
+          locate boost
