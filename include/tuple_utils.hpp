@@ -2,6 +2,7 @@
 #include <boost/functional/hash.hpp>
 #include <utility>
 #include <tuple>
+#include <functional>
 #include <ostream>
 
 /***************************************************************************************
@@ -43,11 +44,36 @@ struct std::hash<std::tuple<Ts...>>
 };
 
 /***************************************************************************************
-*    Original Source: An answer at https://stackoverflow.com/questions/13101061/detect-if-a-type-is-a-stdtuple/48458312
+*    Original Source: An answer at https://stackoverflow.com/a/48458312
 ***************************************************************************************/
 template <typename> struct is_tuple: std::false_type {};
 template <typename ...T> struct is_tuple<std::tuple<T...>>: std::true_type {};
 
-template<typename ...T, size_t... I>
-auto tuple_ref(std::tuple<T...>& t ,  std::index_sequence<I...>)
-{ return std::tie(std::get<I>(t)...) ;}
+/***************************************************************************************
+*    Original Source: https://stackoverflow.com/a/7858971
+***************************************************************************************/
+template <int...>
+struct Seq {};
+
+template <int n, int... s>
+struct Gens : Gens<n-1, n-1, s...> {};
+
+template <int... s>
+struct Gens<0, s...> {
+  typedef Seq<s...> Type;
+};
+
+/***************************************************************************************
+*    Original Source (removed trailing return type): https://stackoverflow.com/a/13071033
+***************************************************************************************/
+template <int... s, typename Tuple>
+auto ref_tuple_impl(Seq<s...> seq, Tuple& tup)
+{
+    return std::make_tuple(std::ref(std::get<s>(tup))...);
+}
+
+template <typename Tuple>
+auto ref_tuple(Tuple& tup)
+{
+    return ref_tuple_impl(typename Gens<std::tuple_size<Tuple>::value>::Type(), tup);
+}

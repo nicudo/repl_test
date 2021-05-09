@@ -32,12 +32,15 @@ namespace nicudo
 
         auto Attributes()
         {
-            //boost::mp11::mp_transform<std::tie, Key> keyRefs = key_;
             if constexpr (is_tuple<Key>::value && is_tuple<Args>::value)
-                //return std::tuple_cat(tuple_ref(key_), tuple_ref(args_));
-                return std::tuple_cat(key_, args_);
+                return std::tuple_cat(ref_tuple(key_), ref_tuple(args_));
         }
 
+        auto AttributesCopy()
+        {
+            if constexpr (is_tuple<Key>::value && is_tuple<Args>::value)
+                return std::tuple_cat(key_, args_);
+        }
     private:
         const Key key_;
         Args args_;
@@ -56,6 +59,7 @@ template<typename Key, typename Args>
 std::ostream& operator<<(std::ostream& os, const nicudo::Item<Key, Args> & item)
 {
     os << '[' << item.key_ << ": " << item.args_ << ']';
+    return os;
 }
 
 template<typename Key, typename Args>

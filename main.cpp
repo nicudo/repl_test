@@ -73,10 +73,37 @@ int main()
         std::cout << "ok: " << *it.first << '\n';
     if (auto it = us.emplace(i2); !it.second)
         std::cout << "ok: " << *it.first << '\n';
+
     auto&& [a_int, a_char, a_string] = i2.Attributes();
     std::cout << "int=" << a_int
         << " char=" << a_char
         << " string=" << a_string << '\n';
+
+    std::cout
+        << "**before\n"
+        << i2 << '\n';
+    a_string = "modified";
+    std::cout
+        << "**after\n"
+        << i2 << '\n';
     
-    //a_int = 3;
+    auto&& [a_int_copy, a_char_copy, a_string_copy] = i1.AttributesCopy();
+    std::cout << "int=" << a_int_copy
+        << " char=" << a_char_copy
+        << " string=" << a_string_copy << '\n';
+
+    std::cout
+        << "**before\n"
+        << i1 << '\n';
+    a_int_copy = 2;
+    a_char_copy = 'b';
+    a_string_copy = "modified";
+    std::cout
+        << "**after\n"
+        << i1 << '\n';
+
+    FItem i1_copy = {std::make_tuple(a_int_copy, a_char_copy), std::make_tuple(a_string_copy)};
+    std::cout
+        << "**copy\n"
+        << i1_copy << '\n';
 }
