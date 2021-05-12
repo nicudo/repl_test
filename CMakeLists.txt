@@ -13,8 +13,12 @@ if(Boost_FOUND)
 endif()
 
 # add the executable
-add_executable(main.out main.cpp)
-
+file(GLOB repl_FILES *.cpp include/*.hpp)
+if(XCODE)
+    add_executable(main.out ${repl_FILES})
+else()
+    add_executable(main.out main.cpp)
+endif()
 
 add_custom_target(run
     COMMAND echo "Will run main!\\n--------------"
