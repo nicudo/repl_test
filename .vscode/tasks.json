@@ -1,0 +1,18 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Roseta",
+            "command": "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES=x86_64 ../../.. && make",
+            "options": {
+                "cwd": "${workspaceFolder}/build/vscode/Roseta"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}

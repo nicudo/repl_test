@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 find_package(Boost)
-# set the project name
 project(test)
 
-# specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -12,7 +10,6 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
 endif()
 
-# add the executable
 file(GLOB repl_FILES *.cpp include/*.hpp)
 if(XCODE)
     add_executable(main.out ${repl_FILES})
